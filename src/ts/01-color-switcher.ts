@@ -2,7 +2,7 @@ import getRandomHexColor from "./random-color";
 
 const startBtnRef = document.querySelector<HTMLButtonElement>("[data-start]");
 const stopBtnRef = document.querySelector<HTMLButtonElement>("[data-stop]");
-let changeColor: number | undefined;
+let changeColor: number;
 
 startBtnRef?.addEventListener("click", makeChangingBodyColor);
 stopBtnRef?.addEventListener("click", stopChangingBodyColor);

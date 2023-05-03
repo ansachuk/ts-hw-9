@@ -1,15 +1,20 @@
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 
+type PromiseItem = {
+	position: number;
+	delay: number;
+};
+
 const formRef = document.querySelector<HTMLFormElement>(".form");
 
 const createPromise = (position: number, delay: number): void => {
 	const shouldResolve = Math.random() > 0.3;
 
-	const promise = new Promise((resolve, reject) => {
+	const promise = new Promise<PromiseItem>((resolve, reject) => {
 		if (shouldResolve) {
-			resolve({ position, delay });
+			return resolve({ position, delay });
 		} else {
-			reject({ position, delay });
+			return reject({ position, delay });
 		}
 	});
 
@@ -33,9 +38,13 @@ const makePromiseList = (firstDelay: number, step: number, amount: number): void
 
 const runPromises = (e: SubmitEvent): void => {
 	e.preventDefault();
-	const {
-		elements: { delay, step, amount },
-	} = e.currentTarget;
+	// const {
+	// 	elements: { delay, step, amount },
+	// } = e.currentTarget;
+
+	const delay = (e.currentTarget as HTMLFormElement).delay as HTMLInputElement;
+	const step = (e.currentTarget as HTMLFormElement).step as HTMLInputElement;
+	const amount = (e.currentTarget as HTMLFormElement).amount as HTMLInputElement;
 
 	makePromiseList(Number(delay.value), Number(step.value), Number(amount.value));
 };
